@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameContainers.h"
 #include "PlayerBaseClass.h"
+#include <stdlib.h>
 
 BaseGame::BaseGame()
 {
@@ -23,6 +24,7 @@ void BaseGame::InitializeGame()
 		printf("Press 9 to exit the game: \n");
 		printf("**********************************\n");
 		std::cin >> SelectionInput;
+		system("CLS");
 
 		if (SelectionInput == 1)
 		{

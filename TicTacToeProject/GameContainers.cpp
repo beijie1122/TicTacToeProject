@@ -1,6 +1,7 @@
 #include "GameContainers.h"
 #include "Quadrants.h"
 #include "PlayerBaseClass.h"
+#include <stdlib.h>
 
 
 GameContainers::GameContainers()
@@ -8,10 +9,16 @@ GameContainers::GameContainers()
 
 }
 
+//Needs edits
 void GameContainers::InitialGameSetup(std::unique_ptr<PlayerBaseClass> &FirstPlayer, std::unique_ptr<PlayerBaseClass> &SecondPlayer)
 {
 	IsGameOver = false;
 	SetupPlayerTurnOrder(FirstPlayer, SecondPlayer);
+
+	//Throw in a Function in the future!!!
+	Player1Symbol = FirstPlayer->PlayerSymbol;
+	Player2Symbol = SecondPlayer->PlayerSymbol;
+
 	SetupBoard();
 	MainGameMenu(FirstPlayer, SecondPlayer);
 }
@@ -64,6 +71,10 @@ void GameContainers::MainGameMenu(std::unique_ptr<PlayerBaseClass>& FirstPlayer,
 
 		CheckSelection(SelectionVariable);
 		SwapPlayers();
+		TurnCounter++;
+		CheckIfDraw();
+
+		system("CLS");
 
 	} while (SelectionVariable != 0 && IsGameOver == false);
 }
@@ -126,9 +137,9 @@ void GameContainers::Q1Selection()
 	}
 	*/
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition1.push_back('!');
-	WinCondition4.push_back('!');
-	WinCondition7.push_back('!');
+	WinCondition1.push_back(CurrentPlayerSymbol);
+	WinCondition4.push_back(CurrentPlayerSymbol);
+	WinCondition7.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition1);
 	CheckifPlayerWon(WinCondition4);
 	CheckifPlayerWon(WinCondition7);
@@ -142,8 +153,8 @@ void GameContainers::Q2Selection()
 	size_t QuadrantMaxYValue = 3;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition1.push_back('!');
-	WinCondition5.push_back('!');
+	WinCondition1.push_back(CurrentPlayerSymbol);
+	WinCondition5.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition1);
 	CheckifPlayerWon(WinCondition5);
 }
@@ -156,9 +167,9 @@ void GameContainers::Q3Selection()
 	size_t QuadrantMaxYValue = 3;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition1.push_back('!');
-	WinCondition6.push_back('!');
-	WinCondition8.push_back('!');
+	WinCondition1.push_back(CurrentPlayerSymbol);
+	WinCondition6.push_back(CurrentPlayerSymbol);
+	WinCondition8.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition1);
 	CheckifPlayerWon(WinCondition6);
 	CheckifPlayerWon(WinCondition8);
@@ -172,8 +183,8 @@ void GameContainers::Q4Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition2.push_back('!');
-	WinCondition4.push_back('!');
+	WinCondition2.push_back(CurrentPlayerSymbol);
+	WinCondition4.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition2);
 	CheckifPlayerWon(WinCondition4);
 }
@@ -186,10 +197,10 @@ void GameContainers::Q5Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition2.push_back('!');
-	WinCondition5.push_back('!');
-	WinCondition7.push_back('!');
-	WinCondition8.push_back('!');
+	WinCondition2.push_back(CurrentPlayerSymbol);
+	WinCondition5.push_back(CurrentPlayerSymbol);
+	WinCondition7.push_back(CurrentPlayerSymbol);
+	WinCondition8.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition2);
 	CheckifPlayerWon(WinCondition5);
 	CheckifPlayerWon(WinCondition7);
@@ -204,8 +215,8 @@ void GameContainers::Q6Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition2.push_back('!');
-	WinCondition6.push_back('!');
+	WinCondition2.push_back(CurrentPlayerSymbol);
+	WinCondition6.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition2);
 	CheckifPlayerWon(WinCondition6);
 }
@@ -218,9 +229,9 @@ void GameContainers::Q7Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition3.push_back('!');
-	WinCondition4.push_back('!');
-	WinCondition8.push_back('!');
+	WinCondition3.push_back(CurrentPlayerSymbol);
+	WinCondition4.push_back(CurrentPlayerSymbol);
+	WinCondition8.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition4);
 	CheckifPlayerWon(WinCondition5);
 	CheckifPlayerWon(WinCondition8);
@@ -234,8 +245,8 @@ void GameContainers::Q8Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition3.push_back('!');
-	WinCondition5.push_back('!');
+	WinCondition3.push_back(CurrentPlayerSymbol);
+	WinCondition5.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition3);
 	CheckifPlayerWon(WinCondition5);
 }
@@ -248,9 +259,9 @@ void GameContainers::Q9Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
-	WinCondition3.push_back('!');
-	WinCondition6.push_back('!');
-	WinCondition7.push_back('!');
+	WinCondition3.push_back(CurrentPlayerSymbol);
+	WinCondition6.push_back(CurrentPlayerSymbol);
+	WinCondition7.push_back(CurrentPlayerSymbol);
 	CheckifPlayerWon(WinCondition3);
 	CheckifPlayerWon(WinCondition6);
 	CheckifPlayerWon(WinCondition7);
@@ -260,9 +271,18 @@ void GameContainers::Q9Selection()
 
 void GameContainers::CheckifPlayerWon(std::vector<char>WinConditionVector)
 {
-	if (WinConditionVector.size() == 3)
+	if (WinConditionVector.size() == 3 && WinConditionVector.at(0) == Player1Symbol && WinConditionVector.at(1) == Player1Symbol && WinConditionVector.at(2) == Player1Symbol)
 	{
-		printf("Congrats, you have won!\n");
+		printf("Congrats, Player 1 Wins!\n");
+		IsGameOver = true;
+		printf("Final Results: \n");
+		PrintBoard();
+		printf("Press 1 to exit to main menu!\n");
+		std::cin >> SelectionVariable;
+	}
+	else if (WinConditionVector.size() == 3 && WinConditionVector.at(0) == Player2Symbol && WinConditionVector.at(1) == Player2Symbol && WinConditionVector.at(2) == Player2Symbol)
+	{
+		printf("Congrats, Player 2 Wins!\n");
 		IsGameOver = true;
 		printf("Final Results: \n");
 		PrintBoard();
@@ -317,6 +337,17 @@ void GameContainers::PrintUISetup(std::unique_ptr<PlayerBaseClass>& FirstPlayer,
 	else
 	{
 		SecondPlayer->DisplayInGameUI();
+	}
+}
+
+void GameContainers::CheckIfDraw()
+{
+	if (TurnCounter == 9)
+	{
+		printf("It is a draw, try again!\n");
+		IsGameOver = true;
+		printf("Please press any number to exit\n");
+		std::cin >> SelectionVariable;
 	}
 }
 

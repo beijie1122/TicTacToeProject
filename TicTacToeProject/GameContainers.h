@@ -20,7 +20,10 @@ public:
 	size_t QuadrantMinYValue;
 	size_t QuadrantMaxXValue;
 	size_t QuadrantMaxYValue;
-	char Player1Symbol = 'X';
+	char Player1Symbol;
+	char Player2Symbol;
+
+	int TurnCounter;
 
 	std::vector<char> WinCondition1{};
 	std::vector<char> WinCondition2{};
@@ -72,6 +75,11 @@ public:
 	void CheckifPlayerWon(std::vector<char>WinConditionVector);
 
 	void QuadrantOverride(size_t &MinX, size_t &MinY, size_t &MaxX, size_t &MaxY);
+
+	void SetupPlayerSymbols(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer);
+
+	void CheckIfDraw();
+
 
 	//Functions involving players
 
