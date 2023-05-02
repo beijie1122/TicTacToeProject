@@ -273,6 +273,7 @@ void GameContainers::CheckifPlayerWon(std::vector<char>WinConditionVector)
 {
 	if (WinConditionVector.size() == 3 && WinConditionVector.at(0) == Player1Symbol && WinConditionVector.at(1) == Player1Symbol && WinConditionVector.at(2) == Player1Symbol)
 	{
+		system("CLS");
 		printf("Congrats, Player 1 Wins!\n");
 		IsGameOver = true;
 		printf("Final Results: \n");
@@ -282,6 +283,7 @@ void GameContainers::CheckifPlayerWon(std::vector<char>WinConditionVector)
 	}
 	else if (WinConditionVector.size() == 3 && WinConditionVector.at(0) == Player2Symbol && WinConditionVector.at(1) == Player2Symbol && WinConditionVector.at(2) == Player2Symbol)
 	{
+		system("CLS");
 		printf("Congrats, Player 2 Wins!\n");
 		IsGameOver = true;
 		printf("Final Results: \n");

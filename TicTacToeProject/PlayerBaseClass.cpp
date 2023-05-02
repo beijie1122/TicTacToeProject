@@ -14,9 +14,9 @@ PlayerBaseClass::PlayerBaseClass(std::string Name, int WinCount, char Symbol)
 
 void PlayerBaseClass::DisplayInGameUI()
 {
-	printf("********************\n");
-	std::cout << "**" << PlayerName << "**" << PlayerWinCount << "**" << PlayerSymbol << "**" << "\n";
-	printf("********************\n");
+	printf("************************\n");
+	std::cout << "**" << PlayerName << "*SCORE*" << PlayerWinCount << "**" << PlayerSymbol << "**" << "\n";
+	printf("************************\n");
 }
 
 void PlayerBaseClass::ChangePlayerDetails(std::string& PlayerName, char& PlayerSymbol)
