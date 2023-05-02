@@ -1,5 +1,6 @@
 #include "GameContainers.h"
 #include "Quadrants.h"
+#include "PlayerBaseClass.h"
 
 
 GameContainers::GameContainers()
@@ -7,11 +8,12 @@ GameContainers::GameContainers()
 
 }
 
-void GameContainers::InitialGameSetup()
+void GameContainers::InitialGameSetup(std::unique_ptr<PlayerBaseClass> &FirstPlayer, std::unique_ptr<PlayerBaseClass> &SecondPlayer)
 {
+	IsGameOver = false;
+	SetupPlayerTurnOrder(FirstPlayer, SecondPlayer);
 	SetupBoard();
-	MainGameMenu();
-
+	MainGameMenu(FirstPlayer, SecondPlayer);
 }
 
 void GameContainers::SetupBoard()
@@ -38,9 +40,6 @@ void GameContainers::SetupBoard()
 	}
 }
 
-
-
-
 void GameContainers::PrintBoard()
 {
 	for (size_t i = 0; i < VectorColumn; i++)
@@ -53,53 +52,60 @@ void GameContainers::PrintBoard()
 	}
 }
 
-void GameContainers::MainGameMenu()
+void GameContainers::MainGameMenu(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer)
 {
 	do
 	{
+		PrintUISetup(FirstPlayer, SecondPlayer);
+		SelectedCharacterSetup(FirstPlayer, SecondPlayer);
 		PrintBoard();
 		printf("Select a Quadrant to Occupy!\n");
 		std::cin >> SelectionVariable;
 
-		if (SelectionVariable == 1)
-		{
-			Q1Selection();
-		}
-		else if (SelectionVariable == 2)
-		{
-			Q2Selection();
-		}
-		else if (SelectionVariable == 3)
-		{
-			Q3Selection();
-		}
-		else if (SelectionVariable == 4)
-		{
-			Q4Selection();
-		}
-		else if (SelectionVariable == 5)
-		{
-			Q5Selection();
-		}
-		else if (SelectionVariable == 6)
-		{
-			Q6Selection();
-		}
-		else if (SelectionVariable == 7)
-		{
-			Q7Selection();
-		}
-		else if (SelectionVariable == 8)
-		{
-			Q8Selection();
-		}
-		else if (SelectionVariable == 9)
-		{
-			Q9Selection();
-		}
+		CheckSelection(SelectionVariable);
+		SwapPlayers();
 
+	} while (SelectionVariable != 0 && IsGameOver == false);
+}
 
-	} while (SelectionVariable != 0);
+void GameContainers::CheckSelection(int &SelectionVariable)
+{
+	if (SelectionVariable == 1)
+	{
+		Q1Selection();
+	}
+	else if (SelectionVariable == 2)
+	{
+		Q2Selection();
+	}
+	else if (SelectionVariable == 3)
+	{
+		Q3Selection();
+	}
+	else if (SelectionVariable == 4)
+	{
+		Q4Selection();
+	}
+	else if (SelectionVariable == 5)
+	{
+		Q5Selection();
+	}
+	else if (SelectionVariable == 6)
+	{
+		Q6Selection();
+	}
+	else if (SelectionVariable == 7)
+	{
+		Q7Selection();
+	}
+	else if (SelectionVariable == 8)
+	{
+		Q8Selection();
+	}
+	else if (SelectionVariable == 9)
+	{
+		Q9Selection();
+	}
 }
 
 void GameContainers::Q1Selection()
@@ -119,8 +125,13 @@ void GameContainers::Q1Selection()
 		}
 	}
 	*/
-
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition1.push_back('!');
+	WinCondition4.push_back('!');
+	WinCondition7.push_back('!');
+	CheckifPlayerWon(WinCondition1);
+	CheckifPlayerWon(WinCondition4);
+	CheckifPlayerWon(WinCondition7);
 }
 
 void GameContainers::Q2Selection()
@@ -131,6 +142,10 @@ void GameContainers::Q2Selection()
 	size_t QuadrantMaxYValue = 3;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition1.push_back('!');
+	WinCondition5.push_back('!');
+	CheckifPlayerWon(WinCondition1);
+	CheckifPlayerWon(WinCondition5);
 }
 
 void GameContainers::Q3Selection()
@@ -141,6 +156,12 @@ void GameContainers::Q3Selection()
 	size_t QuadrantMaxYValue = 3;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition1.push_back('!');
+	WinCondition6.push_back('!');
+	WinCondition8.push_back('!');
+	CheckifPlayerWon(WinCondition1);
+	CheckifPlayerWon(WinCondition6);
+	CheckifPlayerWon(WinCondition8);
 }
 
 void GameContainers::Q4Selection()
@@ -151,6 +172,10 @@ void GameContainers::Q4Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition2.push_back('!');
+	WinCondition4.push_back('!');
+	CheckifPlayerWon(WinCondition2);
+	CheckifPlayerWon(WinCondition4);
 }
 
 void GameContainers::Q5Selection()
@@ -161,6 +186,14 @@ void GameContainers::Q5Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition2.push_back('!');
+	WinCondition5.push_back('!');
+	WinCondition7.push_back('!');
+	WinCondition8.push_back('!');
+	CheckifPlayerWon(WinCondition2);
+	CheckifPlayerWon(WinCondition5);
+	CheckifPlayerWon(WinCondition7);
+	CheckifPlayerWon(WinCondition8);
 }
 
 void GameContainers::Q6Selection()
@@ -171,6 +204,10 @@ void GameContainers::Q6Selection()
 	size_t QuadrantMaxYValue = 7;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition2.push_back('!');
+	WinCondition6.push_back('!');
+	CheckifPlayerWon(WinCondition2);
+	CheckifPlayerWon(WinCondition6);
 }
 
 void GameContainers::Q7Selection()
@@ -181,6 +218,12 @@ void GameContainers::Q7Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition3.push_back('!');
+	WinCondition4.push_back('!');
+	WinCondition8.push_back('!');
+	CheckifPlayerWon(WinCondition4);
+	CheckifPlayerWon(WinCondition5);
+	CheckifPlayerWon(WinCondition8);
 }
 
 void GameContainers::Q8Selection()
@@ -191,6 +234,10 @@ void GameContainers::Q8Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition3.push_back('!');
+	WinCondition5.push_back('!');
+	CheckifPlayerWon(WinCondition3);
+	CheckifPlayerWon(WinCondition5);
 }
 
 void GameContainers::Q9Selection()
@@ -201,6 +248,27 @@ void GameContainers::Q9Selection()
 	size_t QuadrantMaxYValue = 11;
 
 	QuadrantOverride(QuadrantMinXValue, QuadrantMinYValue, QuadrantMaxXValue, QuadrantMaxYValue);
+	WinCondition3.push_back('!');
+	WinCondition6.push_back('!');
+	WinCondition7.push_back('!');
+	CheckifPlayerWon(WinCondition3);
+	CheckifPlayerWon(WinCondition6);
+	CheckifPlayerWon(WinCondition7);
+}
+
+
+
+void GameContainers::CheckifPlayerWon(std::vector<char>WinConditionVector)
+{
+	if (WinConditionVector.size() == 3)
+	{
+		printf("Congrats, you have won!\n");
+		IsGameOver = true;
+		printf("Final Results: \n");
+		PrintBoard();
+		printf("Press 1 to exit to main menu!\n");
+		std::cin >> SelectionVariable;
+	}
 }
 
 void GameContainers::QuadrantOverride(size_t& MinX, size_t& MinY, size_t& MaxX, size_t& MaxY)
@@ -209,8 +277,46 @@ void GameContainers::QuadrantOverride(size_t& MinX, size_t& MinY, size_t& MaxX, 
 	{
 		for (size_t j = MinX; j < MaxX; j++)
 		{
-			BaseBoard[i][j] = Player1Symbol;
+			BaseBoard[i][j] = CurrentPlayerSymbol;
 		}
+	}
+}
+
+void GameContainers::SetupPlayerTurnOrder(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer)
+{
+	PlayerOrderVector.push_back(FirstPlayer->PlayerName);
+	PlayerOrderVector.push_back(SecondPlayer->PlayerName);
+}
+
+void GameContainers::SelectedCharacterSetup(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer)
+{
+	if (PlayerOrderVector.at(0) == FirstPlayer->PlayerName)
+	{
+		CurrentPlayerName = FirstPlayer->PlayerName;
+		CurrentPlayerSymbol = FirstPlayer->PlayerSymbol;
+	}
+	else
+	{
+		CurrentPlayerName = SecondPlayer->PlayerName;
+		CurrentPlayerSymbol = SecondPlayer->PlayerSymbol;
+	}
+}
+
+void GameContainers::SwapPlayers()
+{
+	PlayerOrderVector.push_back(PlayerOrderVector.at(0));
+	PlayerOrderVector.erase(std::remove(PlayerOrderVector.begin(), PlayerOrderVector.end(), PlayerOrderVector.at(0)));
+}
+
+void GameContainers::PrintUISetup(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer)
+{
+	if (PlayerOrderVector.at(0) == FirstPlayer->PlayerName)
+	{
+		FirstPlayer->DisplayInGameUI();
+	}
+	else
+	{
+		SecondPlayer->DisplayInGameUI();
 	}
 }
 

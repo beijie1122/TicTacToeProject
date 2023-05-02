@@ -8,6 +8,7 @@ int main()
 
 	StartGame->InitializeGame();
 
+	/*
 	size_t Quad1XMax = 3;
 	size_t Quad1YMax = 3;
 	size_t Quad2XMax = 3;
@@ -15,6 +16,7 @@ int main()
 	size_t Quad3XMax = 3;
 	size_t Quad3YMax = 11;
 	char Player1Symbol = 'X';
+	*/
 
 	//for (size_t i = 0; i < Quad1YMax; i++)
 	//{

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "PlayerBaseClass.h"
 
 class GameContainers
 {
@@ -21,16 +22,34 @@ public:
 	size_t QuadrantMaxYValue;
 	char Player1Symbol = 'X';
 
+	std::vector<char> WinCondition1{};
+	std::vector<char> WinCondition2{};
+	std::vector<char> WinCondition3{};
+	std::vector<char> WinCondition4{};
+	std::vector<char> WinCondition5{};
+	std::vector<char> WinCondition6{};
+	std::vector<char> WinCondition7{};
+	std::vector<char> WinCondition8{};
+
+	bool IsGameOver = false;
+
+	std::vector<std::string> PlayerOrderVector{};
+
+	std::string CurrentPlayerName;
+	char CurrentPlayerSymbol;
+
 
 	GameContainers();
 
-	void InitialGameSetup();
+	void InitialGameSetup(std::unique_ptr<PlayerBaseClass> &FirstPlayer, std::unique_ptr<PlayerBaseClass> &SecondPlayer);
 
 	void SetupBoard();
 
 	void PrintBoard();
 
-	void MainGameMenu();
+	void MainGameMenu(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer);
+
+	void CheckSelection(int &SelectionVariable);
 
 	void Q1Selection();
 
@@ -50,8 +69,19 @@ public:
 
 	void Q9Selection();
 
+	void CheckifPlayerWon(std::vector<char>WinConditionVector);
 
 	void QuadrantOverride(size_t &MinX, size_t &MinY, size_t &MaxX, size_t &MaxY);
+
+	//Functions involving players
+
+	void SetupPlayerTurnOrder(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer);
+
+	void SelectedCharacterSetup(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer);
+	
+	void SwapPlayers();
+
+	void PrintUISetup(std::unique_ptr<PlayerBaseClass>& FirstPlayer, std::unique_ptr<PlayerBaseClass>& SecondPlayer);
 
 
 	~GameContainers();
